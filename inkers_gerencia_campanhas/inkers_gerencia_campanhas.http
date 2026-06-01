@@ -1,0 +1,6 @@
+@inkers_gerencia_campanhas_HostAddress = http://localhost:5117
+
+GET {{inkers_gerencia_campanhas_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,10 @@
+# Variável com o endereço base da sua API
+@UrlBase = http://localhost:5117
+
+### 1. Disparar Sincronização da Meta
+POST {{UrlBase}}/api/bi/meta/sync
+Accept: application/json
+
+### 2. Verificar Status da Meta (Se você criou a rota GET)
+GET {{UrlBase}}/api/bi/meta/status
+Accept: application/json

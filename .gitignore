@@ -1,0 +1,75 @@
+# .gitignore for ASP.NET Core / .NET projects
+
+# Build results
+/bin/
+/obj/
+
+# Visual Studio
+.vs/
+.vscode/
+
+# Rider
+.idea/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs
+*.log
+
+# Debug files
+*.pdb
+*.cache
+*.exe
+*.dll
+*.app
+*.manifest
+
+# Publish output
+publish/
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+
+# Visual Studio cache files
+*.vsix
+*.dbmdl
+
+# Local app configuration with secrets
+appsettings.Development.json
+appsettings.Local.json
+
+# dotenv
+.env
+.env.*
+
+# User secrets
+secrets.json
+
+# Rider settings folder
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# JetBrains Rider
+*.sublime-workspace
+*.sublime-project
+
+# Temporary files
+*.tmp
+*.temp
+*~
+
+# ignore local metadata from build
+bin/Debug/
+bin/Release/
+obj/Debug/
+obj/Release/
+client_secret_*.json
