@@ -42,7 +42,7 @@ packages/
 
 # Local app configuration with secrets
 appsettings.Development.json
-appsettings.Local.json
+appsettings.json
 
 # dotenv
 .env
