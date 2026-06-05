@@ -1,4 +1,4 @@
-namespace Inkers.GerenciadorCampanhas.Controllerd.CampanhaIaController;
+    namespace Inkers.GerenciadorCampanhas.Controllerd.CampanhaIaController;
 
 using Microsoft.AspNetCore.Mvc;
 using Inkers.GerenciadorCampanhas.Models.AiCampaignRequest;

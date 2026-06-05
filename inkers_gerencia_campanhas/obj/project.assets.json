@@ -1060,11 +1060,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/bruno/Documents/inkers_gerenciador_campanhas/inkers_gerencia_campanhas/inkers_gerencia_campanhas.csproj",
+      "projectUniqueName": "/home/bruno/Documentos/inkers_gerenciador_campanhas/inkers_gerencia_campanhas/inkers_gerencia_campanhas.csproj",
       "projectName": "inkers_gerencia_campanhas",
-      "projectPath": "/home/bruno/Documents/inkers_gerenciador_campanhas/inkers_gerencia_campanhas/inkers_gerencia_campanhas.csproj",
+      "projectPath": "/home/bruno/Documentos/inkers_gerenciador_campanhas/inkers_gerencia_campanhas/inkers_gerencia_campanhas.csproj",
       "packagesPath": "/home/bruno/.nuget/packages/",
-      "outputPath": "/home/bruno/Documents/inkers_gerenciador_campanhas/inkers_gerencia_campanhas/obj/",
+      "outputPath": "/home/bruno/Documentos/inkers_gerenciador_campanhas/inkers_gerencia_campanhas/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/bruno/.nuget/NuGet/NuGet.Config"

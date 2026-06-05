@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Inkers.GerenciadorCampanhas.Models.AiCampaignStrategy;
+using Inkers.GerenciadorCampanhas.Models.AiCampaignRequest;
 
 public class GeminiService
 {
@@ -25,12 +26,22 @@ public class GeminiService
         focado EXCLUSIVAMENTE em estúdios de tatuagem.
         Sua tarefa é ler as informações do tatuador e criar uma estrutura de campanha para a 
         Rede de Pesquisa do Google Ads.
-        
+
         REGRAS RÍGIDAS:
         1. Crie 3 Títulos persuasivos (MÁXIMO 30 CARACTERES CADA).
         2. Crie 2 Descrições detalhadas (MÁXIMO 90 CARACTERES CADA).
         3. Crie 5 palavras-chave de alta intenção de compra focadas na especialidade informada.
-        4. RETORNE APENAS UM JSON VÁLIDO. NÃO INCLUA TEXTO FORA DO JSON. NÃO USE MARKDOWN (```json).";
+        4. Defina um resumo curto para o foco_campanha e defina o orcamento_diario_sugerido baseado no valor informado pelo usuário.
+        5. RETORNE APENAS UM JSON VÁLIDO. NÃO INCLUA TEXTO FORA DO JSON. NÃO USE MARKDOWN (```json).
+
+        O SEU RETORNO DEVE TER EXATAMENTE ESTA ESTRUTURA E NOME DE CHAVES:
+        {
+            ""foco_campanha"": ""string"",
+            ""titulo"": [""string"", ""string"", ""string""],
+            ""descricoes"": [""string"", ""string""],
+            ""palavras_chave"": [""string"", ""string"", ""string"", ""string"", ""string""],
+            ""orcamento_diario_sugerido"": 0.00
+        }";
 
         string UserPrompt = $"Bio do Artista: {BioArtista}\n Especialidades: {Estilos}\n Cidade/Região de atuação: {Cidade}\n Orçamento Diário Disponível: R$ {OrcamentoMaximo}";
 
