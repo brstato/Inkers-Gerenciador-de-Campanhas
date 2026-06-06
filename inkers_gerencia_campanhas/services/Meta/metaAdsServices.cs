@@ -22,6 +22,13 @@ public class MetaAdsService
     {
         try
         {
+            // Fluxo deste serviço:
+            // 1) Obter dados de integração (token, id da conta) do repositório Firebird.
+            // 2) Descriptografar token se necessário via CriptografiaService.
+            // 3) Construir a URL da API da Meta e realizar a requisição com Authorization Bearer.
+            // 4) Ler e processar a resposta; log minimal para debug.
+            // Observação: evitar expor o token nos logs em produção.
+
             var DadosIntegracao = await _repository.ObterIntegracaoMetaAds(IdLoja);
 
             if (DadosIntegracao == null || string.IsNullOrEmpty(DadosIntegracao.MetaLongToken))
@@ -44,6 +51,7 @@ public class MetaAdsService
             var response = await _http.GetAsync(urlMeta);
             var content = await response.Content.ReadAsStringAsync();
 
+            // Em produção, parseie e trate `content` e persista métricas/erros quando necessário.
             Console.WriteLine(content);
 
          

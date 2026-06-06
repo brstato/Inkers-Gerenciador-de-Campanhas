@@ -1,8 +1,8 @@
     namespace Inkers.GerenciadorCampanhas.Controllerd.CampanhaIaController;
 
 using Microsoft.AspNetCore.Mvc;
-using Inkers.GerenciadorCampanhas.Models.AiCampaignRequest;
-using Inkers.GerenciadorCampanhas.Services.ai.Gemini;
+using Inkers.GerenciadorCampanhas.Models;
+using Inkers.GerenciadorCampanhas.Services.Ai;
 using Inkers.GerenciadorCampanhas.Services.Firebird;
 
 
@@ -22,18 +22,13 @@ public class CampanhaIAController : ControllerBase
     {
         if (string.IsNullOrWhiteSpace(request.LojaId))
             return BadRequest("O campo LojaId é obrigatório.");
-        if (string.IsNullOrWhiteSpace(request.Estilo) || string.IsNullOrWhiteSpace(request.Cidade))
-            return BadRequest("Os campos Estilo e Cidade são obrigatórios para gerar uma estratégia de campanha.");
+        if (string.IsNullOrWhiteSpace(request.Cidade))
+            return BadRequest("O campo Cidade é obrigatório para gerar uma estratégia de campanha.");
         if (request.OrcamentoMaximo < 10)
             return BadRequest("O orçamento máximo deve ser de pelo menos R$10,00 para gerar uma estratégia de campanha.");
         try
         {
-            var EstrategiaGerada = await _geminiServive.GerarEstrategiaCampanha(
-                request.BioArtista,
-                request.Estilo,
-                request.Cidade,
-                request.OrcamentoMaximo
-            );
+            var EstrategiaGerada = await _geminiServive.GerarEstrategiaCampanha(request);
             return Ok(EstrategiaGerada);
         }
         catch (Exception ex)

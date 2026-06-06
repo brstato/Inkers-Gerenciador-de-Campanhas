@@ -2,6 +2,10 @@
 
 Este repositório contém um microserviço ASP.NET Core que faz parte do projeto **Inkers**. Ele expõe uma API para configuração e criação automatizada de campanhas de tráfego pago, integrando Google Ads, Meta Ads e assistentes de IA para suportar automação de anúncios.
 
+## Documentação do fluxo
+
+Detalhes do fluxo interno, sequência de chamadas entre routes, services e repositório, e exemplos de teste estão disponíveis em `docs/flow.md`.
+
 ## O que este microserviço faz
 
 - expõe endpoints REST para sincronizar campanhas de tráfego pago

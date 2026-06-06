@@ -24,6 +24,14 @@ public class GoogleAdsService
     {
         try
         {
+            // Fluxo resumido deste método:
+            // 1) Recupera credenciais (GoogleAdsId, RefreshToken, etc.) do repositório Firebird.
+            // 2) Se não houver integração configurada, aborta a execução.
+            // 3) Gera um access token via OAuth usando o refresh token.
+            // 4) Monta uma requisição para a API Google Ads (searchStream neste exemplo).
+            // 5) Envia a requisição, processa a resposta e realiza logging mínimo.
+            // Observação: preferir usar `HttpRequestMessage` por requisição e não alterar DefaultRequestHeaders de uma instância compartilhada.
+
             var DadosIntegracao = await _repository.ObterIntegracaoGoogleAds(IdLoja);
 
             if (DadosIntegracao == null || string.IsNullOrEmpty(DadosIntegracao.GoogleAdsId))
@@ -59,8 +67,10 @@ public class GoogleAdsService
             }
 
             string JsonResponse = await Response.Content.ReadAsStringAsync();
+            // Aqui o serviço apenas loga a resposta. Em produção, parseie e trate o conteúdo.
             Console.WriteLine($"Resposta do Google Ads para loja {IdLoja}: {JsonResponse}");
 
+            // IMPORTANTE: não deixe headers de autorização permanentes em HttpClient compartilhado.
             _http.DefaultRequestHeaders.Clear();
             _http.DefaultRequestHeaders.Add("Authorization", "Bearer " + _RefreshToken);
         }

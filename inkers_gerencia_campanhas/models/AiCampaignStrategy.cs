@@ -1,4 +1,4 @@
-namespace Inkers.GerenciadorCampanhas.Models.AiCampaignStrategy;
+namespace Inkers.GerenciadorCampanhas.Models;
 
 using System.Text.Json.Serialization;
 
