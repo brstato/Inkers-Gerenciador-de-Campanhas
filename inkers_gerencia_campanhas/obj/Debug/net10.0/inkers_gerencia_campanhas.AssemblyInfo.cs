@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("inkers_gerencia_campanhas")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+51bd0c66a4e97a580b48dd7ba289959f657b3345")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+82266f2d2edbb669f154bb9cd6a3065a0efc882f")]
 [assembly: System.Reflection.AssemblyProductAttribute("inkers_gerencia_campanhas")]
 [assembly: System.Reflection.AssemblyTitleAttribute("inkers_gerencia_campanhas")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
