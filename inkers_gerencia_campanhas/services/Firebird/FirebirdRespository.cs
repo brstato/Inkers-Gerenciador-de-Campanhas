@@ -41,20 +41,14 @@ public class FirebirdRepository
                 uuid as IdLoja,
                 google_ads_id as GoogleAdsId,
                 google_refresh_token as GoogleRefreshToken,
-                google_analytics_id as GoogleAnalyticsId
+                google_analytics_id as GoogleAnalyticsId,
+                latitude,
+                longitude,
             from loja where uuid = @IdLoja";
 
         return await conexao.QueryFirstOrDefaultAsync<GoogleAdsCredentials>(sql, new {@IdLoja = IdLoja});       
     }
+
 }
 
-/*
- Observações sobre o repositório e mapeamento de colunas:
- - Este repositório usa Dapper para mapear resultados SQL para POCOs C# (ex.: `IntegracaoAds`, `GoogleAdsCredentials`).
- - Para o mapeamento funcionar corretamente, os aliases SQL devem corresponder exatamente aos nomes das propriedades C# (case-insensitive).
- - Se o método retornar `null`, verifique:
-    * se `IdLoja` passado existe no banco;
-    * se a query retorna linhas no cliente SQL;
-    * se os aliases batem com as propriedades do modelo.
- - Recomendação: adicione logs temporários para inspecionar parâmetros e resultado durante debug (não logar tokens em produção).
-*/
+

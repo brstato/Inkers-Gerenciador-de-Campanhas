@@ -72,7 +72,7 @@ public class GoogleAdsBuilderService
                     }
                 }
             }                     
-        };
+        };  
 
         foreach (var palavra in estrategia.PalavrasChave)
         {
@@ -89,6 +89,31 @@ public class GoogleAdsBuilderService
                 }
             });            
         }
+
+        var PalavrasNegativas = new List<string> 
+        {
+            "curso", "workshop", "aprender", "aula", "tutorial",
+            "máquina", "tinta", "agulha", "kit", "material",
+            "henna", "temporária", "falsa", "adesivo",
+            "remoção", "laser", "apagar", "tirar",
+            "grátis", "barato", "significado", "caseira"
+        };    
+
+        foreach (var palavra in PalavrasNegativas)
+        {
+            Operations.Add(new {
+                campaignCriterionOperation = new {
+                    create = new {
+                        campaign = $"customers/{CustomerId}/campaigns/-2",
+                        negative = true,
+                        keyword = new {
+                            text = palavra,
+                            matchType = "BROAD"
+                        }
+                    }
+                }
+            });            
+        }                
 
         var TitulosFormatados = estrategia.Titulo.Select(t => new { text = t}).ToList();
         var DescricoesFormatadas = estrategia.Descricoes.Select(d => new { text = d}).ToList();
@@ -127,7 +152,7 @@ public class GoogleAdsBuilderService
         RequestMessage.Content = new StringContent(JsonBody, Encoding.UTF8, "application/json");
         RequestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", AccessToken);
         RequestMessage.Headers.Add("developer-token", _configuration["GoogleAds:DeveloperToken"]);
-        RequestMessage.Headers.Add("login-customer-id", "7248879017");
+        RequestMessage.Headers.Add("login-customer-id", _configuration["GoogleAds:LoginCustomerId"]);
         
         var Response  = await _http.SendAsync(RequestMessage);
 
@@ -164,5 +189,43 @@ public class GoogleAdsBuilderService
         string JsonResponse = await TokenResponse.Content.ReadAsStringAsync();
         using var JsonDoc = JsonDocument.Parse(JsonResponse);
         return JsonDoc.RootElement.GetProperty("access_token").GetString()!;
+    }
+
+
+    public async Task<(bool TemSaldo, string GoogleAdsID)> VerificarSaldoAsync(string IdLoja)
+    {
+        var Credenciais = await _repository.ObterIntegracaoGoogleAds(IdLoja)
+            ?? throw new InvalidOperationException("Loja não possui integração com Google Ads ou token inválido.");
+
+        string CustomerId = Credenciais.GoogleAdsId;
+        string AccessToken = await GerarAccessToken(Credenciais.GoogleRefreshToken);
+
+        string urlSearch = $"https://googleads.googleapis.com/v20/customers/{CustomerId}/googleAds:search";    
+
+        var RequestBody = new
+        {
+            query = "SELECT billing_setup.id, billing_setup.status FROM billing_setup WHERE billing_setup.status = 'APPROVED'"
+        };        
+
+        string jsonBody = JsonSerializer.Serialize(RequestBody);
+
+        using var RequestMessage = new HttpRequestMessage(HttpMethod.Post, urlSearch);
+        RequestMessage.Content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+        RequestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", AccessToken);
+        RequestMessage.Headers.Add("developer-token", _configuration["GoogleAds:DeveloperToken"]);
+        RequestMessage.Headers.Add("login-customer-id", _configuration["GoogleAds:LoginCustomerId"]);
+
+        var Response = await _http.SendAsync(RequestMessage);
+
+        if (!Response.IsSuccessStatusCode)
+        {
+            Console.WriteLine($"Erro ao verificar saldo: {Response.StatusCode}");
+            throw new InvalidOperationException($"Erro ao verificar saldo: {Response.StatusCode}");
+        }
+
+        using var JsonDoc = JsonDocument.Parse(await Response.Content.ReadAsStringAsync());
+
+        bool TemSaldo = JsonDoc.RootElement.TryGetProperty("results", out _);
+        return (TemSaldo, Credenciais.GoogleAdsId);
     }
 }

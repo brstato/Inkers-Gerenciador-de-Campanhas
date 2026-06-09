@@ -58,6 +58,24 @@ public static class AiRoutes
 
             try
             {
+                var (TemSaldo, GoogleAdsId) = await GoogleService.VerificarSaldoAsync(request.IdLoja);
+
+                if (!TemSaldo)
+                {
+                    string linkPagamento = $"https://ads.google.com/aw/billing/summary?ocid={GoogleAdsId}";
+                    return Results.BadRequest(
+                        new
+                        {
+                            erro = "SEM SALDO",
+                            mensagem = @"A conta do Google Ads 
+                                vinculada a esta loja não possui 
+                                saldo suficiente para criar uma campanha. 
+                                Por favor, verifique o saldo e tente novamente.",
+                            urlFaturamento = linkPagamento
+                        }
+                    );                
+                }
+
                 string ResultadoGoogle = await GoogleService.CriarCampanhaIaAsync(
                     request.IdLoja,
                     request.Estrategia,
@@ -76,5 +94,7 @@ public static class AiRoutes
                 return Results.Problem($"Ocorreu um erro ao publicar a campanha: {ex.Message}"); 
             }    
         });
+
+        
     }
 }

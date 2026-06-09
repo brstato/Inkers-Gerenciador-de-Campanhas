@@ -12,4 +12,6 @@ public class GoogleAdsCredentials
     public required string GoogleAdsId {get; set;}
     public required string GoogleRefreshToken {get; set;}
     public required string GoogleAnalyticsId {get; set;}
+    public required double Latitude { get; set; }
+    public required double Longitude { get; set; }
 }
